@@ -87,7 +87,7 @@ DATABASES = {
         'NAME': 'chat_bot',
         'USER': 'chat_bot_user',
         'PASSWORD': 'dIAWra5UYrXKISYuyJhm1WeWr3kv34QL',
-        'HOST': '127.0.0.1',
+        'HOST': 'postgres://wkypmuozcxghlg:fd40088449be8d6c52ab2baeafb745a28becfa624f2d3762a79500d39c8b2ef4@ec2-174-129-226-232.compute-1.amazonaws.com:5432/dj2ub894cl9dj',
         'PORT': '5432'
     }
 }
