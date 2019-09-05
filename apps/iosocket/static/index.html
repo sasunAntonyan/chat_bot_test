@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Chat bot</title>
+    <script type="text/javascript" src="//code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.slim.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function(){
+            var threadID = '';
+            namespace = '/chat';
+            var socket = io.connect('http://127.0.0.1:8000/chat');
+
+            socket.on('connect', function() {
+                socket.emit('my event', {data: 'I\'m connected!'});
+            });
+            socket.on('disconnect', function() {
+                $('#log').append('<br>Disconnected');
+            });
+            socket.on('my response user', function(msg) {
+                threadID = msg.thread_id['thread_id']
+                document.getElementById('emit').style.display="none";
+                document.getElementById('broadcast').style.display="block";
+
+                $('#thread').append('<br>Huri: ' + threadID);
+            });
+
+            socket.on('robot answer event', function(msg) {
+                $('#log').append('<br>Huri: ' + msg.data);
+                $('#broadcast_data').val('');
+            });
+
+            $('form#emit').submit(function(event) {
+                socket.emit('my event', {user_name: $('#emit_data').val()});
+                return false;
+            });
+            $('form#broadcast').submit(function(event) {
+                socket.emit('my question event', {question: $('#broadcast_data').val(), thread_id: threadID});
+                return false;
+            });
+            $('form#join').submit(function(event) {
+                socket.emit('join', {room: $('#join_room').val()});
+                return false;
+            });
+            $('form#leave').submit(function(event) {
+                socket.emit('leave', {room: $('#leave_room').val()});
+                return false;
+            });
+            $('form#send_room').submit(function(event) {
+                socket.emit('my room event', {room: $('#room_name').val(), data: $('#room_data').val()});
+                return false;
+            });
+            $('form#close').submit(function(event) {
+                socket.emit('close room', {room: $('#close_room').val()});
+                return false;
+            });
+            $('form#disconnect').submit(function(event) {
+                socket.emit('disconnect request');
+                return false;
+            });
+        });
+    </script>
+</head>
+<body>
+    <h2>Chat Bot</h2>
+    <h3>Send:</h3>
+    <form id="emit" method="POST" action='#' class="form-group">
+        <input type="text" name="emit_data" id="emit_data" placeholder="What is your Name" required>
+        <input type="submit" value="Send" class="btn btn-outline-success btn-sm">
+    </form>
+    <form id="broadcast" method="POST" action='#' class="form-group" style="display: none">
+        <input type="text" name="broadcast_data" id="broadcast_data" placeholder="What is your Question" required>
+        <input type="submit" value="Send" class="btn btn-outline-success btn-sm">
+    </form>
+
+    <h2>Receive:</h2>
+    <div>
+        <p id="log"></p>
+    </div>
+    <div style="display: none"><p id="thread"></p></div>
+</body>
+</html>
