@@ -2,9 +2,9 @@ import hashlib
 import random
 import string
 
+import requests
 
-# import requests
-
+from chat_bot.settings.base import KEY, WEATHER_API_KEY
 
 
 def generate_unique_id(value, length=8):
@@ -24,11 +24,17 @@ def generate_unique_id(value, length=8):
 
 
 def get_weather():
-    # url = 'http://dataservice.accuweather.com/forecasts/v1/daily/1day/' + KEY + '?apikey=' + WEATHER_API_KEY + '&details=true'
-    # r = requests.get(url=url)
-    # data = r.json()
-    # weather = data['DailyForecasts'][0]['RealFeelTemperature']['Minimum']['Value']
-
-    weather_to_celsius = (63 - 32) * 5 / 9
+    """
+    if accuweather api expired return default value
+    :return: weather
+    """
+    try:
+        url = 'http://dataservice.accuweather.com/forecasts/v1/daily/1day/' + KEY + '?apikey=' + WEATHER_API_KEY + '&details=true'
+        r = requests.get(url=url)
+        data = r.json()
+        weather = data['DailyForecasts'][0]['RealFeelTemperature']['Minimum']['Value']
+        weather_to_celsius = (weather - 32) * 5 / 9
+    except:
+        weather_to_celsius = 23
 
     return "{:0.0f}".format(weather_to_celsius)

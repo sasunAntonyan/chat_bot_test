@@ -30,7 +30,7 @@ Create virtualenv
     
 Install requirements for a project.
 
-    cd /var/www/chat_bot && pip install -r requirements/base.txt
+    cd /var/www/chat_bot && pip install -r requirements.txt
     
     
 ##Database creation
@@ -43,3 +43,6 @@ Install requirements for a project.
     CREATE USER chat_bot_user WITH password 'dIAWra5UYrXKISYuyJhm1WeWr3kv34QL';
     GRANT ALL privileges ON DATABASE chat_bot TO chat_bot_user;
     ALTER USER chat_bot_user CREATEDB;
+    
+For Runserver
+    python manage.py run_socket
