@@ -14,7 +14,7 @@ class Command(RunCommand):
             import eventlet
             import eventlet.wsgi
             from chat_bot.wsgi import application
-            eventlet.wsgi.server(eventlet.listen(('', 8000)), application)
+            eventlet.wsgi.server(eventlet.listen(('', 5000)), application)
         elif sio.async_mode == 'gevent':
             # deploy with gevent
             from gevent import pywsgi
@@ -29,7 +29,7 @@ class Command(RunCommand):
                     ('', 8000), application,
                     handler_class=WebSocketHandler).serve_forever()
             else:
-                pywsgi.WSGIServer(('', 8000), application).serve_forever()
+                pywsgi.WSGIServer(('', 5000), application).serve_forever()
         elif sio.async_mode == 'gevent_uwsgi':
             print('Start the application through the uwsgi server. Example:')
             print('uwsgi --http :8000 --gevent 1000 --http-websockets '
