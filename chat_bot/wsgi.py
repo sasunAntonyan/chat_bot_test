@@ -14,7 +14,7 @@ from django.core.wsgi import get_wsgi_application
 
 from apps.iosocket.views import sio
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "chat_bot.settings.base")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "chat_bot.settings.production")
 
 django_app = get_wsgi_application()
 application = WSGIApp(sio, django_app)
