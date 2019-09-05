@@ -1,8 +1,10 @@
 import hashlib
 import random
 import string
-import requests
-from chat_bot.settings.base import KEY, WEATHER_API_KEY, KEY_1
+
+
+# import requests
+
 
 
 def generate_unique_id(value, length=8):
@@ -27,7 +29,6 @@ def get_weather():
     # data = r.json()
     # weather = data['DailyForecasts'][0]['RealFeelTemperature']['Minimum']['Value']
 
-    weather_to_celsius = (63 - 32) * 5/9
+    weather_to_celsius = (63 - 32) * 5 / 9
 
     return "{:0.0f}".format(weather_to_celsius)
-
