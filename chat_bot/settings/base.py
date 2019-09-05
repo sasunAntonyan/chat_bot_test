@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/1.11/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
-
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -87,7 +86,7 @@ DATABASES = {
         'NAME': 'chat_bot',
         'USER': 'chat_bot_user',
         'PASSWORD': 'dIAWra5UYrXKISYuyJhm1WeWr3kv34QL',
-        'HOST': 'postgres://wkypmuozcxghlg:fd40088449be8d6c52ab2baeafb745a28becfa624f2d3762a79500d39c8b2ef4@ec2-174-129-226-232.compute-1.amazonaws.com:5432/dj2ub894cl9dj',
+        'HOST': '127.0.0.1',
         'PORT': '5432'
     }
 }

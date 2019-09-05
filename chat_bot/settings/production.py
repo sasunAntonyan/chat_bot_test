@@ -1,4 +1,6 @@
+from django.conf import settings
 
+settings.configure()
 from chat_bot.settings.base import *
 
 DEBUG = True
